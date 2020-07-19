@@ -4,6 +4,7 @@ node {
    //load "$JENKINS_HOME/workspace//stacktest-staging.groovy"
    
    echo "${HOME}"
+   echo ${workspace}	
    echo "${env.DB_URL}"
    echo "${env.DB_URL2}"
 
