@@ -1,6 +1,9 @@
 #!groovy
 
 node {
+   load "$JENKINS_HOME/.envvars/stacktest-staging.groovy"
+   echo "${env.DB_URL}"
+   echo "${env.DB_URL2}"
 
     def SF_CONSUMER_KEY=env.SF_CONSUMER_KEY
     def SF_USERNAME=env.SF_USERNAME
@@ -10,7 +13,7 @@ node {
     def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://test.salesforce.com"
 
 
-    def toolbelt = tool 'toolbelt'
+    //def toolbelt = tool 'toolbelt'
 
 
     // -------------------------------------------------------------------------
@@ -27,31 +30,32 @@ node {
     // JWT key credentials.
     // -------------------------------------------------------------------------
 
- 	withEnv(["HOME=${env.WORKSPACE}"]) {	
+ 	//withEnv(["HOME=${env.WORKSPACE}"]) {	
 	
-	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
+	    //withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
 		// -------------------------------------------------------------------------
 		// Authenticate to Salesforce using the server key.
 		// -------------------------------------------------------------------------
 
+	/*
 		stage('Authorize to Salesforce') {
 			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${server_key_file} --username ${SF_USERNAME} --setalias UAT"
 		    if (rc != 0) {
 			error 'Salesforce org authorization failed.'
 		    }
-		}
+		} */
 
 
 		// -------------------------------------------------------------------------
 		// Deploy metadata and execute unit tests.
 		// -------------------------------------------------------------------------
 
-		stage('Deploy and Run Tests') {
+		/*stage('Deploy and Run Tests') {
 		    rc = command "${toolbelt}/sfdx force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR} --targetusername UAT --testlevel ${TEST_LEVEL}"
 		    if (rc != 0) {
 			error 'Salesforce deploy and test run failed.'
 		    }
-		}
+		}*/
 
 
 		// -------------------------------------------------------------------------
