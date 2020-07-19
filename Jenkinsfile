@@ -6,8 +6,11 @@ node {
    echo "${HOME}"
    echo "${env.WORKSPACE}"
    load "${env.WORKSPACE}/env-devcicd.groovy"
+   // bash usage
    echo "${env.DB_URL}"
+   // groovy usage	
    println env.DB_URL
+	
    echo "${env.DB_URL2}"
    println env.DB_URL2
 
