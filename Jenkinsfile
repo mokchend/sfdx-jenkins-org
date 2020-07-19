@@ -12,7 +12,7 @@ node {
    println env.DB_URL
 	
    echo "${env.DB_URL2}"
-   println env.DB_URL2
+   println "*** DB_URL2=" + env.DB_URL2
 
     def SF_CONSUMER_KEY=env.SF_CONSUMER_KEY
     def SF_USERNAME=env.SF_USERNAME
