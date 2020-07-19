@@ -1,10 +1,11 @@
 #!groovy
 
 node {
-   //load "$JENKINS_HOME/workspace//stacktest-staging.groovy"
+   
    // root user where home=/root
    echo "${HOME}"
    echo "${env.WORKSPACE}"
+   load "${env.WORKSPACE}/env-devcicd.groovy"
    echo "${env.DB_URL}"
    echo "${env.DB_URL2}"
 
