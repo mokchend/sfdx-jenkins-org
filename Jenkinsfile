@@ -5,8 +5,8 @@ node {
    // root user where home=/root
    echo "${HOME}"
    echo "${env.WORKSPACE}"
-   //load "${env.WORKSPACE}/env-devcicd.groovy"
-   load "${env.WORKSPACE}/.env"
+   load "${env.WORKSPACE}/env-devcicd.groovy"
+   //load "${env.WORKSPACE}/.env"
    // bash usage
    echo "${env.DB_URL}"
    // groovy usage	
