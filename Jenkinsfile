@@ -17,9 +17,11 @@ node {
     def SF_CONSUMER_KEY=env.SF_CONSUMER_KEY
     def SF_USERNAME=env.SF_USERNAME
     def SERVER_KEY_CREDENTIALS_ID=env.SERVER_KEY_CREDENTIALS_ID
-    def DEPLOYDIR='src'
-    def TEST_LEVEL='RunLocalTests'
+    def DEPLOYDIR=env.DEPLOYDIR
+    def TEST_LEVEL=env.TEST_LEVEL
     def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://test.salesforce.com"
+
+	println "*** SF_USERNAME=" + env.SF_USERNAME
 
 
     //def toolbelt = tool 'toolbelt'
