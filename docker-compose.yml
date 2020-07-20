@@ -1,4 +1,11 @@
-version: "3"
+version: "3.2"
+volumes:
+  my_test_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /mnt/v/databases_data/postgres
 services:
   jenkins:
     image: jenkins/jenkins:lts
@@ -27,8 +34,8 @@ services:
     environment:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonarpasswd
-    #volumes:
-    #  - /mnt/a/data01/postgres-data-sonar:/var/lib/postgresql/data
+      volumes:
+        - "my_test_volume:/var/lib/postgresql/data"
   sonarqube:
     image: sonarqube:lts
     ports:
@@ -44,3 +51,4 @@ services:
       - postgres
 networks:
   netjenkinscicdsfdc:
+  
