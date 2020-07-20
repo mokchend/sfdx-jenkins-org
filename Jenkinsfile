@@ -44,7 +44,7 @@ node {
 
  	withEnv(["HOME=${env.WORKSPACE}"]) {	
 	
-	    //withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
+	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
 		// -------------------------------------------------------------------------
 		// Authenticate to Salesforce using the server key.
 		// -------------------------------------------------------------------------
@@ -52,6 +52,8 @@ node {
 	
 		stage('Authorize to Salesforce') {
 			println "*** SF_USERNAME=" + env.SF_USERNAME
+			println "*** server_key_file1=" + SERVER_KEY_CREDENTIALS_ID
+			println "*** server_key_file2=" + env.SERVER_KEY_CREDENTIALS_ID
 			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${server_key_file} --username ${SF_USERNAME} --setalias UAT"
 		    if (rc != 0) {
 			error 'Salesforce org authorization failed.'
