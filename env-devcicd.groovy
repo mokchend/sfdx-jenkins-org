@@ -7,3 +7,8 @@ env.SERVER_KEY_CREDENTIALS_ID="923F1ACEE196C740B02F2F899BB3D63A483D60CE75114A999
 env.DEPLOYDIR="src"
 env.TEST_LEVEL="RunLocalTests"
 env.SF_INSTANCE_URL="https://login.salesforce.com"
+
+// https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ci_jenkins_config_env.htm
+// You can also optionally set the SFDX_AUTOUPDATE_DISABLE variable to true to disable auto-update of Salesforce CLI. 
+// CLI auto-update can interfere with the execution of a Jenkins job.
+env.SFDX_AUTOUPDATE_DISABLE=true
