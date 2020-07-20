@@ -33,9 +33,7 @@ node {
 			def DEPLOYDIR=env.DEPLOYDIR
 			def TEST_LEVEL=env.TEST_LEVEL
 			def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://test.salesforce.com"
-
-			println "*** SF_USERNAME=" + env.SF_USERNAME
-
+			
     }
    
 
@@ -51,13 +49,14 @@ node {
 		// Authenticate to Salesforce using the server key.
 		// -------------------------------------------------------------------------
 
-	/*
+	
 		stage('Authorize to Salesforce') {
+			println "*** SF_USERNAME=" + env.SF_USERNAME
 			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${server_key_file} --username ${SF_USERNAME} --setalias UAT"
 		    if (rc != 0) {
 			error 'Salesforce org authorization failed.'
 		    }
-		} */
+		} 
 
 
 		// -------------------------------------------------------------------------
