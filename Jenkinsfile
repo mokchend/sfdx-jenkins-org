@@ -1,31 +1,8 @@
 #!groovy
 
 node {
-   
-   // root user where home=/root
-   echo "${HOME}"
-   echo "${env.WORKSPACE}"
-   load "${env.WORKSPACE}/env-devcicd.groovy"
-   //load "${env.WORKSPACE}/.env"
-   // bash usage
-   echo "${env.DB_URL}"
-   // groovy usage	
-   println env.DB_URL
-	
-   echo "${env.DB_URL2}"
-   println "*** DB_URL2=" + env.DB_URL2
 
-    def SF_CONSUMER_KEY=env.SF_CONSUMER_KEY
-    def SF_USERNAME=env.SF_USERNAME
-    def SERVER_KEY_CREDENTIALS_ID=env.SERVER_KEY_CREDENTIALS_ID
-    def DEPLOYDIR=env.DEPLOYDIR
-    def TEST_LEVEL=env.TEST_LEVEL
-    def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://test.salesforce.com"
-
-	println "*** SF_USERNAME=" + env.SF_USERNAME
-
-
-    //def toolbelt = tool 'toolbelt'
+	//def toolbelt = tool 'toolbelt'
 
 
     // -------------------------------------------------------------------------
@@ -36,6 +13,31 @@ node {
         checkout scm
     }
 
+	stage('update variables') {
+           // root user where home=/root
+		echo "${HOME}"
+		echo "${env.WORKSPACE}"
+		load "${env.WORKSPACE}/env-devcicd.groovy"
+		//load "${env.WORKSPACE}/.env"
+		// bash usage
+		echo "${env.DB_URL}"
+		// groovy usage	
+		println env.DB_URL
+			
+		echo "${env.DB_URL2}"
+		println "*** DB_URL2=" + env.DB_URL2
+
+			def SF_CONSUMER_KEY=env.SF_CONSUMER_KEY
+			def SF_USERNAME=env.SF_USERNAME
+			def SERVER_KEY_CREDENTIALS_ID=env.SERVER_KEY_CREDENTIALS_ID
+			def DEPLOYDIR=env.DEPLOYDIR
+			def TEST_LEVEL=env.TEST_LEVEL
+			def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://test.salesforce.com"
+
+			println "*** SF_USERNAME=" + env.SF_USERNAME
+
+    }
+   
 
     // -------------------------------------------------------------------------
     // Run all the enclosed stages with access to the Salesforce
