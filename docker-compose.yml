@@ -14,6 +14,7 @@ services:
   
   sforg:
     build: .
+    image: chendamok/sforg
     command: sfdx --version
     ports:
       - "3000:3000"
