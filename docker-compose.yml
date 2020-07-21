@@ -3,16 +3,17 @@ services:
   jenkins:
     image: jenkins/jenkins:lts
     # TODO: workaround, run as root use to avoid the "file permission octal value of 600" issue when running SFDX
+    # Dockerfile is executed (built) before volume is mounted, you can't change permissions in mounted volume this way
     # Cannot find a way to use the defined jenkins use to run the sfdx command
-    # the sfdx command belongs to root user
-    user: root
+    # user: root
     ports:
       - "8080:8080"
       - "50000:50000"
     networks:
       - netjenkinscicdsfdc
     volumes:
-      - /mnt/a/data01/jenkins_home:/var/jenkins_home
+      # Configure bind propagation : https://docs.docker.com/storage/bind-mounts/
+      - /mnt/a/data01/jenkins_home:/var/jenkins_home:rshared
       - /var/run/docker.sock:/var/run/docker.sock
   sforg:
     build: .
