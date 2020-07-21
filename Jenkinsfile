@@ -18,6 +18,7 @@ node {
 		// Temporary fix but must be avoided: run sudo with the command
 		// or refer to https://github.com/docker/compose/issues/6677		
 		command "docker exec sfdx-jenkins-org_sforg_1 sfdx --help"
+		//command "docker exec sfdx-jenkins-org_sforg_1 sfdx force"
 	}
 
 	stage('update variables') {
