@@ -77,25 +77,21 @@ node {
 		    }
 		}
 
-
-	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
-		
-			println "*** DO YOU SEE ME ***"
-
-
-
-
 		// -------------------------------------------------------------------------
 		// Example shows how to run a check-only deploy.
 		// -------------------------------------------------------------------------
 
-		//stage('Check Only Deploy') {
-		//    rc = command "${toolbelt}/sfdx force:mdapi:deploy --checkonly --wait 10 --deploydir ${DEPLOYDIR} --targetusername UAT --testlevel ${TEST_LEVEL}"
-		//    if (rc != 0) {
-		//        error 'Salesforce deploy failed.'
-		//    }
-		//}
-	  }
+		stage('Check Only Deploy') {
+		   rc = command "sudo ${toolbelt}/sfdx force:mdapi:deploy --checkonly --wait 10 --deploydir ${DEPLOYDIR} --targetusername  ${ALIAS} --testlevel ${TEST_LEVEL}"
+		   if (rc != 0) {
+		       error 'Salesforce deploy failed.'
+		   }
+		}		
+
+
+	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
+			println "*** DO YOU SEE ME ***"
+	  	}
 	}
 }
 
