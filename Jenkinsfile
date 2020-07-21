@@ -67,8 +67,27 @@ node {
 		// Authenticate to Salesforce using the server key.
 		// -------------------------------------------------------------------------
 
-		stage('Authorize to Salesforce') {
+		stage('Authorize to Salesforce - version 1') {
 			rc = command "sudo ${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${SERVER_KEY_CREDENTIALS_ID} --username ${SF_USERNAME} --setalias ${ALIAS}"
+			
+			if (rc != 0) {
+			error 'Salesforce org authorization failed.'
+			} else {
+				println "*** Authenticated successfully with " + env.SF_USERNAME
+			}
+		}
+
+
+		
+		stage('Authorize to Salesforce - version 2 - Running from another container') {
+			// ERROR: Couldn't connect to Docker daemon at http+docker://localunixsocket - is it running? 
+			// Temporary fix but must be avoided: run sudo with the command
+			// or refer to https://github.com/docker/compose/issues/6677		
+			// Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: 
+			// Post http://%2Fvar%2Frun%2Fdocker.sock/v1.29/containers/sfdx-jenkins-org_sforg_1/exec: dial unix /var/run/docker.sock: connect: permission denied
+			// Strange thing is that when I run the same command inside the docker instance as jenkins user: the command works fine ??!!
+			//command "docker exec sfdx-jenkins-org_sforg_1 sfdx --help"
+			rc = command "sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${SERVER_KEY_CREDENTIALS_ID} --username ${SF_USERNAME} --setalias ${ALIAS}"
 			
 			if (rc != 0) {
 			error 'Salesforce org authorization failed.'
