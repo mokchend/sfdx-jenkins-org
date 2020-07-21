@@ -14,7 +14,10 @@ node {
     }
 
 	stage('SFDX Command help from my SF Docker image') {
-		command "docker-compose exec sforg sfdx force"
+		// ERROR: Couldn't connect to Docker daemon at http+docker://localunixsocket - is it running? 
+		// Temporary fix but must be avoided: run sudo with the command
+		// or refer to https://github.com/docker/compose/issues/6677		
+		command "docker exec sfdx-jenkins-org_sforg_1 sfdx --help"
 	}
 
 	stage('update variables') {
