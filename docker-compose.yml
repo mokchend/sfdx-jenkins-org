@@ -1,11 +1,14 @@
 version: "3"
 services:
   jenkins:
+    #build: ./jenkins
+    #image: chendamok/sfdc-jenkins
     image: jenkins/jenkins:lts
     # TODO: workaround, run as root use to avoid the "file permission octal value of 600" issue when running SFDX
     # Dockerfile is executed (built) before volume is mounted, you can't change permissions in mounted volume this way
     # Cannot find a way to use the defined jenkins use to run the sfdx command
     # user: root
+    entrypoint: /bin/sh -c "chmod 600 /mnt/a/data01/jenkins_home/.sfdx && chmod 600 /var/jenkins_home/workspace/salesforce_demo_org/.sfdx/key.json"
     ports:
       - "8080:8080"
       - "50000:50000"
