@@ -49,6 +49,12 @@ node {
 			println "*** server_key_file2=" + env.SERVER_KEY_CREDENTIALS_ID
 			println "*** toolbelt=" + toolbelt
 
+
+			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${server_key_file} --username ${SF_USERNAME} --setalias UAT"
+		    if (rc != 0) {
+			error 'Salesforce org authorization failed.'
+		    }
+
 	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
 		// -------------------------------------------------------------------------
 		// Authenticate to Salesforce using the server key.
