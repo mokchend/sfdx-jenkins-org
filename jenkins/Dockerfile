@@ -12,6 +12,12 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-c
 RUN chmod 755 /usr/local/bin/docker-compose
 RUN usermod -a -G sudo jenkins
 RUN echo "jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# https://github.com/docker/compose/issues/6677
+RUN groupadd docker
+RUN usermod -aG docker jenkins
+RUN newgrp docker 
+
 USER jenkins
 # RUN chown -R jenkins:jenkins /mnt/a/data01/jenkins_home/.sfdx/
 # RUN ls -ailt /mnt/a/data01/jenkins_home
