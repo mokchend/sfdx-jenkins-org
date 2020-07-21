@@ -13,6 +13,10 @@ node {
         checkout scm
     }
 
+	stage('SFDX Command help from my SF Docker image') {
+		command "docker-compose exec sforg sfdx force"
+	}
+
 	stage('update variables') {
            // root user where home=/root
 		echo "${HOME}"
