@@ -100,9 +100,11 @@ node {
 		}		
 
 
-	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
-			println "*** DO YOU SEE ME ***"
-	  	}
+		// TODO: ERROR: Could not find credentials entry with ID '/var/jenkins_home/workspace/salesforce_demo_org/certificates/devhub/server.key'
+		// with is matching SERVER_KEY_CREDENTIALS_ID  >>> Guess: must be defined as secret in Jenkins variable
+	    //withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
+			println "*** DO YOU SEE ME - This is the end.***"
+	  	//}
 	}
 }
 
