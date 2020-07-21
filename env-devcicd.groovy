@@ -12,6 +12,9 @@ env.TEST_LEVEL="NoTestRun"
 env.SF_INSTANCE_URL="https://login.salesforce.com"
 env.ALIAS="devcicd"
 
+// The value must match folderName_ServiceName_1 from your docker-compose file
+env.DOCKER_SFORG="sfdx-jenkins-org_sforg_1"
+
 // https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ci_jenkins_config_env.htm
 // You can also optionally set the SFDX_AUTOUPDATE_DISABLE variable to true to disable auto-update of Salesforce CLI. 
 // CLI auto-update can interfere with the execution of a Jenkins job.

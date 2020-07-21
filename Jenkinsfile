@@ -44,6 +44,7 @@ node {
 			def DEPLOYDIR=env.DEPLOYDIR
 			def TEST_LEVEL=env.TEST_LEVEL
 			def ALIAS=env.ALIAS
+			def DOCKER_SFORG=env.DOCKER_SFORG
 			def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://test.salesforce.com"
 			
     }
@@ -89,7 +90,7 @@ node {
 			//command "docker exec sfdx-jenkins-org_sforg_1 sfdx --help"
 			// STILL this error: Ensure the file /var/jenkins_home/workspace/salesforce_demo_org@2/.sfdx/key.json has the file permission octal value of 600. >> add sudo
 
-			rc = command "sudo docker exec sfdx-jenkins-org_sforg_1 sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${SERVER_KEY_CREDENTIALS_ID} --username ${SF_USERNAME} --setalias ${ALIAS}"
+			rc = command "sudo docker exec ${DOCKER_SFORG} sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${SERVER_KEY_CREDENTIALS_ID} --username ${SF_USERNAME} --setalias ${ALIAS}"
 			
 			if (rc != 0) {
 			error 'Salesforce org authorization failed.'
