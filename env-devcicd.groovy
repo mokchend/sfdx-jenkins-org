@@ -8,6 +8,7 @@ env.SERVER_KEY_CREDENTIALS_ID='/var/jenkins_home/workspace/salesforce_demo_org/c
 env.DEPLOYDIR="src"
 env.TEST_LEVEL="RunLocalTests"
 env.SF_INSTANCE_URL="https://login.salesforce.com"
+env.ALIAS="devcicd"
 
 // https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ci_jenkins_config_env.htm
 // You can also optionally set the SFDX_AUTOUPDATE_DISABLE variable to true to disable auto-update of Salesforce CLI. 

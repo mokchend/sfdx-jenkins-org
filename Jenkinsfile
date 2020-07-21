@@ -32,6 +32,7 @@ node {
 			def SERVER_KEY_CREDENTIALS_ID=env.SERVER_KEY_CREDENTIALS_ID
 			def DEPLOYDIR=env.DEPLOYDIR
 			def TEST_LEVEL=env.TEST_LEVEL
+			def ALIAS=env.ALIAS
 			def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://test.salesforce.com"
 			
     }
@@ -50,11 +51,14 @@ node {
 			println "*** toolbelt=" + toolbelt
 
 
-			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile '/var/jenkins_home/workspace/salesforce demo org/server.key' --username ${SF_USERNAME} --setalias UAT"
+			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile env.SERVER_KEY_CREDENTIALS_ID --username ${SF_USERNAME} --setalias ${ALIAS}"
 		    
 			if (rc != 0) {
 			error 'Salesforce org authorization failed.'
-		    }
+		    } else {
+				println "*** Authenticated successfully with " + env.SF_USERNAME
+
+			}
 
 	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
 		// -------------------------------------------------------------------------
