@@ -52,40 +52,37 @@ node {
 
 
 			// ${toolbelt}/
-			rc = command "sudo ${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${SERVER_KEY_CREDENTIALS_ID} --username ${SF_USERNAME} --setalias ${ALIAS}"
-		    
-			if (rc != 0) {
-			error 'Salesforce org authorization failed.'
-		    } else {
-				println "*** Authenticated successfully with " + env.SF_USERNAME
-
-			}
-
-	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
 		// -------------------------------------------------------------------------
 		// Authenticate to Salesforce using the server key.
 		// -------------------------------------------------------------------------
 
-	
 		stage('Authorize to Salesforce') {
-
-			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${server_key_file} --username ${SF_USERNAME} --setalias UAT"
-		    if (rc != 0) {
+			rc = command "sudo ${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${SERVER_KEY_CREDENTIALS_ID} --username ${SF_USERNAME} --setalias ${ALIAS}"
+			
+			if (rc != 0) {
 			error 'Salesforce org authorization failed.'
-		    }
-		} 
-
-
+			} else {
+				println "*** Authenticated successfully with " + env.SF_USERNAME
+			}
+		}
+		
 		// -------------------------------------------------------------------------
 		// Deploy metadata and execute unit tests.
 		// -------------------------------------------------------------------------
 
-		/*stage('Deploy and Run Tests') {
-		    rc = command "${toolbelt}/sfdx force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR} --targetusername UAT --testlevel ${TEST_LEVEL}"
+		stage('Deploy and Run Tests') {
+		    rc = command "sudo ${toolbelt}/sfdx force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR} --targetusername ${ALIAS} --testlevel ${TEST_LEVEL}"
 		    if (rc != 0) {
-			error 'Salesforce deploy and test run failed.'
+				error 'Salesforce deploy and test run failed.'
 		    }
-		}*/
+		}
+
+
+	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
+		
+			println "*** DO YOU SEE ME ***"
+
+
 
 
 		// -------------------------------------------------------------------------
