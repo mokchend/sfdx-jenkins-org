@@ -6,7 +6,9 @@ env.SF_USERNAME="chenda.mok@gmail.com.devcicd"
 //env.SERVER_KEY_CREDENTIALS_ID="${env.WORKSPACE}/certificates/devhub/server.pass.key"
 env.SERVER_KEY_CREDENTIALS_ID='/var/jenkins_home/workspace/salesforce_demo_org/certificates/devhub/server.key'
 env.DEPLOYDIR="src"
-env.TEST_LEVEL="RunLocalTests"
+// https://developer.salesforce.com/docs/atlas.en-us.daas.meta/daas/forcemigrationtool_deploy.htm#ant_deploy_testLevel
+// NoTestRun RunSpecifiedTests RunLocalTests RunAllTestsInOrg
+env.TEST_LEVEL="NoTestRun"
 env.SF_INSTANCE_URL="https://login.salesforce.com"
 env.ALIAS="devcicd"
 
