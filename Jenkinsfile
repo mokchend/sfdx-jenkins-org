@@ -50,8 +50,9 @@ node {
 			println "*** toolbelt=" + toolbelt
 
 
-			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${server_key_file} --username ${SF_USERNAME} --setalias UAT"
-		    if (rc != 0) {
+			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile '/var/jenkins_home/workspace/salesforce demo org/server.key' --username ${SF_USERNAME} --setalias UAT"
+		    
+			if (rc != 0) {
 			error 'Salesforce org authorization failed.'
 		    }
 
