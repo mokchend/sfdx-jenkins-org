@@ -17,8 +17,11 @@ node {
 		// ERROR: Couldn't connect to Docker daemon at http+docker://localunixsocket - is it running? 
 		// Temporary fix but must be avoided: run sudo with the command
 		// or refer to https://github.com/docker/compose/issues/6677		
-		command "docker exec sfdx-jenkins-org_sforg_1 sfdx --help"
-		//command "docker exec sfdx-jenkins-org_sforg_1 sfdx force"
+		// Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: 
+		// Post http://%2Fvar%2Frun%2Fdocker.sock/v1.29/containers/sfdx-jenkins-org_sforg_1/exec: dial unix /var/run/docker.sock: connect: permission denied
+		// Strange thing is that when I run the same command inside the docker instance as jenkins user: the command works fine ??!!
+		//command "docker exec sfdx-jenkins-org_sforg_1 sfdx --help"
+		command "sudo docker exec sfdx-jenkins-org_sforg_1 sfdx force"
 	}
 
 	stage('update variables') {
