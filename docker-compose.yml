@@ -3,6 +3,7 @@ services:
   jenkins:
     image: jenkins/jenkins:lts
     # TODO: workaround, run as root use to avoid the "file permission octal value of 600" issue when running SFDX
+    # Cannot find a way to use the defined jenkins use to run the sfdx command
     user: root
     ports:
       - "8080:8080"
