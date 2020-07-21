@@ -87,7 +87,9 @@ node {
 			// Post http://%2Fvar%2Frun%2Fdocker.sock/v1.29/containers/sfdx-jenkins-org_sforg_1/exec: dial unix /var/run/docker.sock: connect: permission denied
 			// Strange thing is that when I run the same command inside the docker instance as jenkins user: the command works fine ??!!
 			//command "docker exec sfdx-jenkins-org_sforg_1 sfdx --help"
-			rc = command "sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${SERVER_KEY_CREDENTIALS_ID} --username ${SF_USERNAME} --setalias ${ALIAS}"
+			// STILL this error: Ensure the file /var/jenkins_home/workspace/salesforce_demo_org@2/.sfdx/key.json has the file permission octal value of 600. >> add sudo
+
+			rc = command "sudo docker exec sfdx-jenkins-org_sforg_1 sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${SERVER_KEY_CREDENTIALS_ID} --username ${SF_USERNAME} --setalias ${ALIAS}"
 			
 			if (rc != 0) {
 			error 'Salesforce org authorization failed.'
