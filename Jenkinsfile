@@ -62,6 +62,9 @@ node {
 			println "*** server_key_file2=" + env.SERVER_KEY_CREDENTIALS_ID
 			println "*** toolbelt=" + toolbelt
 
+		stage('Initialisation') {
+			command "cat ./asciiart/bunny.txt"
+		}
 
 			// ${toolbelt}/
 		// -------------------------------------------------------------------------
