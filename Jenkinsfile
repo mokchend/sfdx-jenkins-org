@@ -4,6 +4,9 @@ node {
 
 	def toolbelt = tool 'toolbelt'
 
+	
+
+
 
 	stage('Initialisation') {
 		command "cat ./asciiart/bunny.txt"
@@ -20,10 +23,20 @@ node {
 
 
 	stage('update variables') {
+		// dynamically set the environment properties from .env
+		// .properties file way
+		path = "${workspace}/.env"
+		readProperties(file: path).each {key, value -> env[key] = value }
+
+		// This is working correctly
+		// Groovy way but require a groovy syntax file
+		// load "${env.WORKSPACE}/env-devcicd.groovy"
+
            // root user where home=/root
 		echo "${HOME}"
 		echo "${env.WORKSPACE}"
-		load "${env.WORKSPACE}/env-devcicd.groovy"
+		
+		
 		//load "${env.WORKSPACE}/.env"
 		// bash usage
 		echo "${env.DB_URL}"
@@ -143,3 +156,12 @@ def command(script) {
 		return bat(returnStatus: true, script: script);
     }
 }
+
+def loadEnvironmentVariables(path){
+    def props = readProperties  file: path
+    keys= props.keySet()
+    for(key in keys) {
+        value = props["${key}"]
+        env."${key}" = "${value}"
+    }
+} 
