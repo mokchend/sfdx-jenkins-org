@@ -125,9 +125,15 @@ node {
 		// Deploy metadata and execute unit tests.
 		// -------------------------------------------------------------------------
 
-		stage('Deploy and Run Tests') {
-		    //rc = command "sudo ${toolbelt}/sfdx force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR} --targetusername ${ALIAS} --testlevel ${TEST_LEVEL}"
-		    rc = command "sudo docker exec ${DOCKER_SFORG} sfdx force:mdapi:deploy --wait 10 --deploydir /var/jenkins_home/workspace/salesforce_demo_org/${DEPLOYDIR} --targetusername ${ALIAS} --testlevel ${TEST_LEVEL}"
+		stage('Deploy and Run Tests - V1 from jenkins docker') {
+		    rc = command "sudo ${toolbelt}/sfdx force:mdapi:deploy --wait 10 --deploydir ${workspace}/${DEPLOYDIR} --targetusername ${ALIAS} --testlevel ${TEST_LEVEL}"
+			if (rc != 0) {
+				error 'Salesforce deploy and test run failed.'
+		    }
+		}
+
+		stage('Deploy and Run Tests - V2 from sforg docker') {
+		    rc = command "sudo docker exec ${DOCKER_SFORG} sfdx force:mdapi:deploy --wait 10 --deploydir ${workspace}/${DEPLOYDIR} --targetusername ${ALIAS} --testlevel ${TEST_LEVEL}"
 			if (rc != 0) {
 				error 'Salesforce deploy and test run failed.'
 		    }
@@ -137,7 +143,7 @@ node {
 		// Example shows how to run a check-only deploy.
 		// -------------------------------------------------------------------------
 
-		stage('Check Only Deploy') {
+		stage('Check Only Deploy - V1 from jenkins docker') {
 			println ""
 		   // Run in the current workspace of Jenkins
 		   //rc = command "sudo ${toolbelt}/sfdx force:mdapi:deploy --checkonly --wait 10 --deploydir ${DEPLOYDIR} --targetusername  ${ALIAS} --testlevel ${TEST_LEVEL}"
@@ -149,7 +155,21 @@ node {
 		   if (rc != 0) {
 		       error 'Salesforce deploy failed.'
 		   }
-		}		
+		
+		
+		stage('Check Only Deploy - V2 from sforg docker') {
+			println ""
+		   // Run in the current workspace of Jenkins
+		   //rc = command "sudo ${toolbelt}/sfdx force:mdapi:deploy --checkonly --wait 10 --deploydir ${DEPLOYDIR} --targetusername  ${ALIAS} --testlevel ${TEST_LEVEL}"
+		   
+		   // From another Docker, As i have mounted the volume the path is: /var/jenkins_home/workspace/salesforce_demo_org/src/
+		   // So a tweak is necessay to make the call working
+		   // TODO: HARDOCDED Value for time beeing
+		   rc = command "sudo docker exec ${DOCKER_SFORG} sfdx force:mdapi:deploy --checkonly --wait 10 --deploydir  ${workspace}/${DEPLOYDIR} --targetusername  ${ALIAS} --testlevel ${TEST_LEVEL}"
+		   if (rc != 0) {
+		       error 'Salesforce deploy failed.'
+		   }
+		}}		
 
 
 		// TODO: ERROR: Could not find credentials entry with ID '/var/jenkins_home/workspace/salesforce_demo_org/certificates/devhub/server.key'
