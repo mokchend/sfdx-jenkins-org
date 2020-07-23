@@ -26,6 +26,9 @@ node {
 		// dynamically set the environment properties from .env
 		// .properties file way
 		path = "${workspace}/.env"
+		
+		// ERROR: java.lang.NoSuchMethodError: No such DSL method 'readProperties'
+		// require: https://plugins.jenkins.io/pipeline-utility-steps/
 		readProperties(file: path).each {key, value -> env[key] = value }
 
 		// This is working correctly
