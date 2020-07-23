@@ -127,7 +127,7 @@ node {
 
 		stage('Deploy and Run Tests') {
 		    //rc = command "sudo ${toolbelt}/sfdx force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR} --targetusername ${ALIAS} --testlevel ${TEST_LEVEL}"
-		    rc = command "sudo docker exec ${DOCKER_SFORG} sfdx force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR} --targetusername ${ALIAS} --testlevel ${TEST_LEVEL}"
+		    rc = command "sudo docker exec ${DOCKER_SFORG} sfdx force:mdapi:deploy --wait 10 --deploydir /var/jenkins_home/workspace/salesforce_demo_org/${DEPLOYDIR} --targetusername ${ALIAS} --testlevel ${TEST_LEVEL}"
 			if (rc != 0) {
 				error 'Salesforce deploy and test run failed.'
 		    }
@@ -138,8 +138,14 @@ node {
 		// -------------------------------------------------------------------------
 
 		stage('Check Only Deploy') {
+			println ""
+		   // Run in the current workspace of Jenkins
 		   //rc = command "sudo ${toolbelt}/sfdx force:mdapi:deploy --checkonly --wait 10 --deploydir ${DEPLOYDIR} --targetusername  ${ALIAS} --testlevel ${TEST_LEVEL}"
-		   rc = command "sudo docker exec ${DOCKER_SFORG} sfdx force:mdapi:deploy --checkonly --wait 10 --deploydir ${DEPLOYDIR} --targetusername  ${ALIAS} --testlevel ${TEST_LEVEL}"
+		   
+		   // From another Docker, As i have mounted the volume the path is: /var/jenkins_home/workspace/salesforce_demo_org/src/
+		   // So a tweak is necessay to make the call working
+		   // TODO: HARDOCDED Value for time beeing
+		   rc = command "sudo docker exec ${DOCKER_SFORG} sfdx force:mdapi:deploy --checkonly --wait 10 --deploydir /var/jenkins_home/workspace/salesforce_demo_org/${DEPLOYDIR} --targetusername  ${ALIAS} --testlevel ${TEST_LEVEL}"
 		   if (rc != 0) {
 		       error 'Salesforce deploy failed.'
 		   }
